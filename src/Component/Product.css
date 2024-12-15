@@ -2,18 +2,54 @@
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   padding: 0;
   margin: 0;
-  background-color: darkgoldenrod;
+  /* background-color: darkgoldenrod; */
   /* color: white; */
   box-sizing: border-box;
 }
-
 .app {
-  padding-left: 20rem;
-  padding-right: 20rem;
-  margin-top: 5rem;
+  margin-left: 10rem;
+}
+
+.app h2 {
+  color: crimson;
+  margin-left: 7rem;
+}
+
+.heading {
+  text-align: center;
 }
 
 .heading td {
-  border: 2px solid black;
-  padding: 1rem;
+  border: 1px solid darkgoldenrod;
+  padding: 1px;
+  color: lightcoral;
+}
+
+.pagination {
+  display: flex;
+  justify-content: start;
+  /* gap: 0.5rem; */
+  margin-top: 1rem;
+  /* display: inline-block; */
+}
+.pagination .page-item {
+  list-style-type: none;
+  height: 3rem;
+  /* width: 2rem; */
+}
+.pagination a {
+  text-decoration: none;
+  border: 1px solid darkorange;
+  text-align: center;
+  color: black;
+  padding: 8px 8px;
+  /* transition: background-color 1s; */
+  /* float: left; */
+}
+.pagination a.active {
+  background-color: #4caf50;
+  color: white;
+}
+.pagination a:hover:not(.active) {
+  background-color: #73e33f;
 }
