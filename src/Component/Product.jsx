@@ -7,7 +7,6 @@ function Product() {
 
   useEffect(() => {
     axios.get("https://api.restful-api.dev/objects").then((response) => {
-      console.log(response);
       setRecords(response.data);
     });
   }, []);
@@ -25,17 +24,20 @@ function Product() {
               <td>CAPACITY</td>
             </tr>
           </thead>
-          <tbody>
+          <tbody >
             {Records.map((item, i) => {
               return (
-                <tr key={i}>
-                  <td>{item.id}</td>
-                  <td>{item.name}</td>
-                  <td>{item.color}</td>
-                  <td>{item.capacity}</td>
-                </tr>
+                <>
+                  <tr key={i} style={{ textAlign: "center" }}>
+                    <td>{item.id}</td>
+                    <td>{item.name}</td>
+                    <td>{item.data?.color || "N/A"}</td>
+                    <td>{item.data?.capacity || "N/A"}</td>
+                  </tr>
+                </>
               );
             })}
+
           </tbody>
         </table>
       </div>
