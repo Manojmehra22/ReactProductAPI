@@ -3,18 +3,17 @@ import "./Product.css";
 import axios from "axios";
 
 function Product() {
-  const [Records, setRecords] = useState([]);
+  const [tableData, setTableData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const recordsPerPage = 2;
-  const lastIndex = currentPage * recordsPerPage;
-  const firstIndex = lastIndex - recordsPerPage;
-  const records = Records.slice(firstIndex, lastIndex);
-  const npage = Math.ceil(Records.length / recordsPerPage);
-  const numbers = [...Array(npage + 1).keys()].slice(1);
+  const [rowsPerPage, setRowsPerPage] = useState(2);
+  const indexOfLastItem = currentPage * rowsPerPage;
+  const indexOfFirstItem = indexOfLastItem - rowsPerPage;
+  const currentItems = tableData?.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(tableData?.total / rowsPerPage);
 
   useEffect(() => {
     axios.get("https://api.restful-api.dev/objects").then((response) => {
-      setRecords(response.data);
+      setTableData(response?.data);
     });
   }, []);
 
@@ -32,66 +31,30 @@ function Product() {
             </tr>
           </thead>
           <tbody>
-            {Records.map((item, i) => {
+            {currentItems?.map((value, index) => {
               return (
                 <>
-                  <tr key={i} style={{ textAlign: "center" }}>
-                    <td>{item.id}</td>
-                    <td>{item.name}</td>
-                    <td>{item.data?.color || "N/A"}</td>
-                    <td>{item.data?.capacity || "N/A"}</td>
+                  <tr key={index} style={{ textAlign: "center" }}>
+                    <td>{value.id}</td>
+                    <td>{value.name}</td>
+                    <td>{value.data?.color || "N/A"}</td>
+                    <td>{value.data?.capacity || "N/A"}</td>
                   </tr>
                 </>
               );
             })}
           </tbody>
         </table>
-        <nav>
-          <ul className="pagination">
-            <li className="page-item">
-              <a href="#" className="page-link" onClick={prePage}>
-                Pre
-              </a>
-            </li>
-            {numbers.map((item, i) => (
-              <li
-                className={`page-item ${currentPage === item ? "active" : ""}`}
-                key={i}
-              >
-                <a
-                  href="#"
-                  className="page-link"
-                  onClick={() => changeCPage(item)}
-                >
-                  {item}
-                </a>
-              </li>
-            ))}
-            <li className="page-item">
-              <a href="#" className="page-link" onClick={nextPage}>
-                Next
-              </a>
-            </li>
-          </ul>
-        </nav>
+        <div className="pagination">
+          <button>Prev</button>
+          {Array.from({ length: totalPages }, (_, index) => (
+            <button>{index + 1}</button>
+          ))}
+          <button>Next</button>
+        </div>
       </div>
     </>
   );
-
-  function prePage() {
-    if (currentPage !== firstIndex) {
-      setCurrentPage(currentPage - 1);
-    }
-  }
-
-  function changeCPage(id) {
-    setCurrentPage(id);
-  }
-  function nextPage() {
-    if (currentPage !== lastIndex) {
-      setCurrentPage(currentPage + 1);
-    }
-  }
 }
 
 export default Product;

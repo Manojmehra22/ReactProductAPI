@@ -6,13 +6,11 @@
   /* color: white; */
   box-sizing: border-box;
 }
-.app {
-  margin-left: 10rem;
-}
 
 .app h2 {
   color: crimson;
-  margin-left: 7rem;
+  text-align: center;
+  margin-top: 2rem;
 }
 
 .heading {
@@ -24,32 +22,55 @@
   padding: 1px;
   color: lightcoral;
 }
+.app {
+  padding: 0 5rem 0 5rem;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 18px;
+  text-align: left;
+}
+
+.table th,
+.table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+}
+
+.table th {
+  background-color: #f2f2f2;
+}
+.table th {
+  background-color: grey;
+}
+
+.table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
 
 .pagination {
   display: flex;
-  justify-content: start;
-  /* gap: 0.5rem; */
-  margin-top: 1rem;
-  /* display: inline-block; */
+  justify-content: center;
+  margin: 20px 0;
 }
-.pagination .page-item {
-  list-style-type: none;
-  height: 3rem;
-  /* width: 2rem; */
-}
-.pagination a {
-  text-decoration: none;
-  border: 1px solid darkorange;
-  text-align: center;
-  color: black;
-  padding: 8px 8px;
-  /* transition: background-color 1s; */
-  /* float: left; */
-}
-.pagination a.active {
+
+.pagination button {
   background-color: #4caf50;
   color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 0 5px;
+  cursor: pointer;
+  border-radius: 5px;
 }
-.pagination a:hover:not(.active) {
-  background-color: #73e33f;
+
+.pagination button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+.pagination button.active {
+  background-color: #008cba; /* Change to your preferred color */
+  color: white;
 }
