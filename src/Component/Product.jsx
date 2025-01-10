@@ -9,13 +9,29 @@ function Product() {
   const indexOfLastItem = currentPage * rowsPerPage;
   const indexOfFirstItem = indexOfLastItem - rowsPerPage;
   const currentItems = tableData?.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil(tableData?.total / rowsPerPage);
+  const totalPages = Math.ceil(tableData?.length / rowsPerPage);
 
   useEffect(() => {
     axios.get("https://api.restful-api.dev/objects").then((response) => {
       setTableData(response?.data);
     });
   }, []);
+
+  const handlePrevClick = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextClick = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePageClick = (page) => {
+    setCurrentPage(page);
+  };
 
   return (
     <>
@@ -31,26 +47,32 @@ function Product() {
             </tr>
           </thead>
           <tbody>
-            {currentItems?.map((value, index) => {
-              return (
-                <>
-                  <tr key={index} style={{ textAlign: "center" }}>
-                    <td>{value.id}</td>
-                    <td>{value.name}</td>
-                    <td>{value.data?.color || "N/A"}</td>
-                    <td>{value.data?.capacity || "N/A"}</td>
-                  </tr>
-                </>
-              );
-            })}
+            {currentItems?.map((value, index) => (
+              <tr key={index} style={{ textAlign: "center" }}>
+                <td>{value.id}</td>
+                <td>{value.name}</td>
+                <td>{value.data?.color || "N/A"}</td>
+                <td>{value.data?.capacity || "N/A"}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
         <div className="pagination">
-          <button>Prev</button>
+          <button onClick={handlePrevClick} disabled={currentPage === 1}>
+            Prev
+          </button>
           {Array.from({ length: totalPages }, (_, index) => (
-            <button>{index + 1}</button>
+            <button
+              key={index}
+              onClick={() => handlePageClick(index + 1)}
+              className={currentPage === index + 1 ? "active" : ""}
+            >
+              {index + 1}
+            </button>
           ))}
-          <button>Next</button>
+          <button onClick={handleNextClick} disabled={currentPage === totalPages}>
+            Next
+          </button>
         </div>
       </div>
     </>
